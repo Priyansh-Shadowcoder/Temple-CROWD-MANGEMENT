@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
+body {
+    background-color: #fdf5e6; /* Old Lace warm background */
+    font-family: 'Merriweather', serif;
+    color: #4a2511;
+}
+
+.temple-nav {
+    background: linear-gradient(90deg, #b03060, #8b0000); /* Deep maroon */
+    border-bottom: 4px solid #daa520; /* Goldenrod */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.temple-nav .navbar-brand {
+    color: #ffd700 !important; /* Gold text */
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.temple-card {
+    background-color: #ffffff;
+    border: 1px solid #eecfa1;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(139, 69, 19, 0.1);
+}
+
+.temple-card-header {
+    background-color: #ff8c00; /* Saffron/Dark Orange */
+    color: white;
+    border-radius: 11px 11px 0 0;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.btn-temple-primary {
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-temple-primary:hover {
+    background-color: #e67e22;
+    color: white;
+}
+
+.btn-temple-outline {
+    border: 2px solid #8b0000;
+    color: #8b0000;
+}
+
+.btn-temple-outline:hover {
+    background-color: #8b0000;
+    color: white;
+}
+
+.gate-card {
+    border-left: 5px solid #daa520;
+    background: #fff;
+    transition: transform 0.2s;
+}
+
+.gate-card:hover {
+    transform: translateY(-5px);
+}

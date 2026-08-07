@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Temple Management - Devotee Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="text-center mb-4">
+                <h1 style="color: #8b0000; font-weight: bold;">Shree Mandir Portal</h1>
+                <p class="text-muted">Divine Darshan Management</p>
+            </div>
+            
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="alert alert-warning text-center">{{ messages[0] }}</div>
+              {% endif %}
+            {% endwith %}
+            
+            <div class="temple-card p-4 shadow">
+                <h4 class="text-center mb-4">Devotee Login</h4>
+                <form action="/login" method="POST">
+                    <input type="email" name="email" class="form-control mb-3" placeholder="Email Address" required>
+                    <input type="password" name="password" class="form-control mb-4" placeholder="Password" required>
+                    <button type="submit" class="btn btn-temple-primary w-100 py-2">Enter Portal</button>
+                </form>
+                <div class="text-center mt-3">
+                    <small>Don't have an account? <a href="{{ url_for('signup') }}" style="color: #d35400; text-decoration: none; font-weight: bold;">Register Here</a></small>
+                </div>
+            </div>
+            
+            <!-- Link to Admin Portal -->
+            <div class="text-center mt-4">
+                <a href="{{ url_for('admin_login') }}" class="text-muted" style="text-decoration: none; font-size: 0.9em;">
+                    <i class="bi bi-shield-lock"></i> Temple Administrator? Login Here
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

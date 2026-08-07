@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<nav class="navbar temple-nav p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Temple Admin Portal</a>
+        <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 style="color: #8b0000; font-weight: bold;">Traffic Overview</h3>
+        
+        <!-- Date Selector Form -->
+        <form action="/admin/dashboard" method="GET" class="d-flex">
+            <input type="date" name="date" class="form-control me-2" value="{{ selected_date }}">
+            <button type="submit" class="btn btn-temple-primary">View Date</button>
+        </form>
+    </div>
+    
+    <div class="row text-center mt-4">
+        <h5 class="text-muted mb-3">Live Gate Heatmap for {{ selected_date }}</h5>
+        <div class="col-md-6">
+            <h4 style="color: #27ae60;">Entry Gates</h4>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Gate 1: {{ entry_heat[1] }} People</span>
+                <a href="/admin/gate/entry/1?date={{ selected_date }}" class="btn btn-sm btn-outline-success">Monitor</a>
+            </div>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Gate 2: {{ entry_heat[2] }} People</span>
+                <a href="/admin/gate/entry/2?date={{ selected_date }}" class="btn btn-sm btn-outline-success">Monitor</a>
+            </div>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Gate 3: {{ entry_heat[3] }} People</span>
+                <a href="/admin/gate/entry/3?date={{ selected_date }}" class="btn btn-sm btn-outline-success">Monitor</a>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <h4 style="color: #c0392b;">Exit Gates</h4>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center" style="border-left-color: #c0392b;">
+                <span class="fw-bold">Gate 1: {{ exit_heat[1] }} People</span>
+                <a href="/admin/gate/exit/1?date={{ selected_date }}" class="btn btn-sm btn-outline-danger">Monitor</a>
+            </div>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center" style="border-left-color: #c0392b;">
+                <span class="fw-bold">Gate 2: {{ exit_heat[2] }} People</span>
+                <a href="/admin/gate/exit/2?date={{ selected_date }}" class="btn btn-sm btn-outline-danger">Monitor</a>
+            </div>
+            <div class="gate-card p-3 mb-3 shadow-sm d-flex justify-content-between align-items-center" style="border-left-color: #c0392b;">
+                <span class="fw-bold">Gate 3: {{ exit_heat[3] }} People</span>
+                <a href="/admin/gate/exit/3?date={{ selected_date }}" class="btn btn-sm btn-outline-danger">Monitor</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

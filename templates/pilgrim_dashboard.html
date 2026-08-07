@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Devotee Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav class="navbar temple-nav p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Devotee Darshan Portal</a>
+        <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="alert alert-success">{{ messages[0] }}</div>{% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <!-- AI Prediction Chart -->
+        <div class="col-md-8">
+            <div class="temple-card mb-4">
+                <div class="temple-card-header">AI Crowd Prediction (Next 7 Days)</div>
+                <div class="p-3">
+                    <canvas id="crowdChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="col-md-4">
+            <div class="temple-card mb-4">
+                <div class="temple-card-header">Book Darshan Pass</div>
+                <div class="p-3">
+                    <form action="/pilgrim/book" method="POST">
+                        <label class="fw-bold">Darshan Date:</label>
+                        <input type="date" name="date" class="form-control mb-3" required>
+                        
+                        <label class="fw-bold">Family Members:</label>
+                        <div id="members-list">
+                            <input type="text" name="members[]" class="form-control mb-2" placeholder="Member 1 Name" required>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary mb-3 w-100" onclick="addMember()">+ Add Another Member</button>
+                        
+                        <button type="submit" class="btn btn-temple-primary w-100">Generate E-Passes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pass History -->
+    <div class="temple-card mb-5">
+        <div class="temple-card-header">Your Darshan Passes</div>
+        <div class="p-3">
+            <table class="table table-hover">
+                <thead><tr><th>Date</th><th>Devotee Name</th><th>Entry Gate</th><th>Exit Gate</th></tr></thead>
+                <tbody>
+                    {% for p in user_passes %}
+                    <tr>
+                        <td>{{ p.date }}</td>
+                        <td>{{ p.member_name }}</td>
+                        <td><span class="badge" style="background-color: #27ae60;">Gate {{ p.entry_gate }}</span></td>
+                        <td><span class="badge" style="background-color: #c0392b;">Gate {{ p.exit_gate }}</span></td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4" class="text-center text-muted">No passes booked yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('crowdChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ dates | tojson }},
+            datasets: [{
+                label: 'Predicted Devotee Count',
+                data: {{ predictions | tojson }},
+                borderColor: '#d35400',
+                backgroundColor: 'rgba(211, 84, 0, 0.1)',
+                fill: true,
+                tension: 0.3
+            }]
+        }
+    });
+
+    function addMember() {
+        const div = document.getElementById('members-list');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'members[]';
+        input.className = 'form-control mb-2';
+        input.placeholder = 'Next Member Name';
+        div.appendChild(input);
+    }
+</script>
+</body>
+</html>
