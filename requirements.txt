@@ -2,4 +2,3 @@ Flask
 gunicorn
 flask_sqlalchemy
 pandas
-sklearn
