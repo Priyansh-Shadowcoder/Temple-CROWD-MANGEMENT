@@ -202,8 +202,11 @@ def gate_view(type, num):
         
     return render_template('gate_view.html', passes=passes, type=type, num=num, selected_date=selected_date)
 
+# 1. Initialize the database and model outside the main block
+with app.app_context():
+    db.create_all()
+    train_model()
+
+# 2. Keep the run command inside the main block for local testing
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        train_model()
     app.run(debug=True)
